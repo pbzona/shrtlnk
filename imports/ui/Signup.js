@@ -3,12 +3,34 @@ import React from 'react';
 import {Link} from 'react-router';
 
 export default class Signup extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      error: ''
+    };
+  }
+
+  onSubmit(e) {
+    e.preventDefault();
+
+    this.setState({
+      error: 'Something went wrong.'
+    });
+  }
+
   render() {
     return (
       <div>
-        <h1>Sign up for ShrtLnk</h1>
+        <h1>Join ShrtLnk</h1>
 
-        signup form here
+        {this.state.error ? <p>{this.state.error}</p> : undefined}
+
+        <form onSubmit={this.onSubmit.bind(this)}>
+          <input type="email" name="email" placeholder="Email"/>
+          <input type="password" name="password" placeholder="Password"/>
+          <button>Create Account</button>
+        </form>
 
         <Link to="/">Already have an account?</Link>
       </div>
