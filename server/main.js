@@ -20,27 +20,4 @@ Meteor.startup(() => {
 
     return true;
   });
-
-  //const employeeSchema = new SimpleSchema({
-  //  name: {
-  //    type: String,
-  //    min: 1,
-  //    max: 200
-  //  },
-  //  hourlyWage: {
-  //    type: Number,
-  //    min: 0
-  //  },
-  //  email: {
-  //    type: String,
-  //    regEx: SimpleSchema.RegEx.Email
-  //  }
-  //})
-
-  //employeeSchema.validate({
-  //  name: 'Phil',
-  //  hourlyWage: 234,
-  //  email: 'phil@emailcom'
-  //})
-
 });

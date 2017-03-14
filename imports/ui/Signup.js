@@ -27,7 +27,7 @@ export default class Signup extends React.Component {
       });
     } else {
       this.setState({
-        error: 'Password must be more than 8 characters long'
+        error: 'Password must be at least 8 characters long'
       });
     }
   }
