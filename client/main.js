@@ -4,6 +4,8 @@ import {Tracker} from 'meteor/tracker';
 
 import {routes, onAuthChange} from '../imports/routes/routes';
 
+import '../imports/startup/simple-schema-config.js';
+
 import {Links} from '../imports/api/links';
 
 Tracker.autorun(() => {
