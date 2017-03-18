@@ -4,6 +4,8 @@ import {Meteor} from 'meteor/meteor';
 
 import {Links} from '../api/links';
 
+import LinksListItem from './LinksListItem';
+
 export default class LinksList extends React.Component {
   constructor(props) {
     super(props);
@@ -18,27 +20,25 @@ export default class LinksList extends React.Component {
       const links = Links.find().fetch();
       this.setState({links})
     });
-    console.log('componentDidMount')
   }
 
   componentWillUnmount() {
     this.linksTracker.stop();
-    console.log('componentWillUnmount')
   }
 
   renderLinksListItems() {
     return this.state.links.map((link) => {
-      return <li key={link._id}>{link.url}</li>;
-    })
+      const shortUrl = Meteor.absoluteUrl(link._id);
+
+      return <LinksListItem key={link._id} shortUrl={shortUrl} {...link}/>
+    });
   }
 
   render() {
     return (
       <div>
         <p>Links List</p>
-        <ul>
-          {this.renderLinksListItems()}
-        </ul>
+        {this.renderLinksListItems()}
       </div>
     );
   }
