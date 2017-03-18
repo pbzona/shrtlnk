@@ -1,4 +1,5 @@
 import React from 'react';
+import {Meteor} from 'meteor/meteor';
 import Clipboard from 'clipboard';
 
 export default class LinksListItem extends React.Component {
@@ -23,7 +24,7 @@ export default class LinksListItem extends React.Component {
 				});
 			}, 500);
 		}).on('error', () => {
-			alert('Browser doesn\'t support copying. Please copy the link manually.')
+			alert('Unable to copy. Please copy the link manually.');
 		});
 	}
 
@@ -36,8 +37,14 @@ export default class LinksListItem extends React.Component {
 			<div>
 				<p><strong>{this.props.shortUrl}</strong></p>
 				<p>{this.props.url}</p>
+				<p>{this.props.visible.toString()}</p>
 				<button ref="copy" data-clipboard-text={this.props.shortUrl}>
 					{this.state.justCopied ? 'Copied!' : 'Copy'}
+				</button>
+				<button onClick={() => {
+					Meteor.call('links.setVisibility', this.props._id, !this.props.visible);
+				}}>
+					{this.props.visible ? 'Hide' : 'Unhide'}
 				</button>
 			</div>
 		);
@@ -48,5 +55,6 @@ LinksListItem.propTypes = {
 	_id: React.PropTypes.string.isRequired,
 	userId: React.PropTypes.string.isRequired,
 	url: React.PropTypes.string.isRequired,
+	visible: React.PropTypes.bool.isRequired,
 	shortUrl: React.PropTypes.string.isRequired,
 };
