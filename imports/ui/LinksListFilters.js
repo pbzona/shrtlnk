@@ -12,15 +12,9 @@ export default class LinksListFilters extends React.Component{
 
 	componentDidMount() {
 		this.checkTracker = Tracker.autorun(() => {
-			if (Session.get('showVisible')) {
-				this.setState({
-					showVisible: true
-				});
-			} else {
-				this.setState({
-					showVisible: false
-				});
-			}
+			this.setState({
+				showVisible: Session.get('showVisible')
+			});
 		});
 	}
 
