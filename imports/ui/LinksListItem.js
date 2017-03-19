@@ -43,16 +43,15 @@ export default class LinksListItem extends React.Component {
 		}
 
 		return (
-			<p>{this.props.visitedCount} {visitMessage} {visitedMessage}</p>
+			<p className="item__message">{this.props.visitedCount} {visitMessage} {visitedMessage}</p>
 		);
 	}
 
 	render() {
 		return (
-			<div>
-				<p>{this.props.shortUrl}</p>
-				<p>{this.props.url}</p>
-				<p>{this.props.visible}</p>
+			<div className="item">
+				<h2>{this.props.shortUrl}</h2>
+				<p className="item__message">{this.props.url}</p>
 				{this.renderStats()}
 				<a className="button button--pill button--link" href={this.props.shortUrl} target="blank">
 					Visit
