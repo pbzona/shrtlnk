@@ -50,7 +50,7 @@ export default class LinksListItem extends React.Component {
 	render() {
 		return (
 			<div>
-				<p><strong>{this.props.shortUrl}</strong></p>
+				<p>{this.props.shortUrl}</p>
 				<p>{this.props.url}</p>
 				<p>{this.props.visible}</p>
 				{this.renderStats()}
