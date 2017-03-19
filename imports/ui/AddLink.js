@@ -8,7 +8,8 @@ export default class AddLink extends React.Component {
 
     this.state = {
       url: '',
-      isOpen: false
+      isOpen: false,
+      error: ''
     };
   }
 
@@ -16,16 +17,17 @@ export default class AddLink extends React.Component {
     const url = this.state.url;
     e.preventDefault();
 
-    if (url) {
-      Meteor.call('links.insert', url, (err, res) => {
-        if (!err) {
-          this.setState({
-            url: '',
-            isOpen: false
-          });
-        }
-      });
-    }
+
+    Meteor.call('links.insert', url, (err, res) => {
+      if (!err) {
+        this.handleModalClose();
+      } else {
+        this.setState({
+          error: err.reason
+        });
+      }
+    });
+
   }
 
   onChange(e) {
@@ -34,27 +36,35 @@ export default class AddLink extends React.Component {
     });
   }
 
+  handleModalClose() {
+    this.setState({
+      url: '',
+      isOpen: false,
+      error: ''
+    });
+  }
+
 	render() {
 		return (
 			<div>
         <button onClick={() => this.setState({isOpen: true})}>+ Add Link</button>
-        <Modal isOpen={this.state.isOpen} contentLabel="Add Link">
-          <p>Add Link</p>
+        <Modal
+          isOpen={this.state.isOpen}
+          contentLabel="Add Link"
+          onAfterOpen={() => this.refs.url.focus()}
+          onRequestClose={this.handleModalClose.bind(this)}>
+          <h1>Add Link</h1>
+            {this.state.error ? <p>{this.state.error}</p> : undefined}
             <form onSubmit={this.onSubmit.bind(this)}>
               <input
                 type="text"
+                ref="url"
                 placeholder="URL"
                 value={this.state.text}
                 onChange={this.onChange.bind(this)}/>
               <button>Add Link</button>
             </form>
-            <button onClick={() => {
-                  this.setState({
-                    url: '',
-                    isOpen: false
-                  });
-                }
-              }>Cancel</button>
+            <button onClick={this.handleModalClose.bind(this)}>Cancel</button>
         </Modal>
 			</div>
 		)
